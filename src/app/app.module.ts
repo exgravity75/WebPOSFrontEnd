@@ -11,9 +11,17 @@ import { OrderService } from './shared/order.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import { OrderItemsComponent } from './orders/order-items/order-items.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SignInComponent } from './user/sign-in/sign-in.component';
+import { SignUpComponent } from './user/sign-up/sign-up.component';
+import { HeaderComponent } from './header/header.component';
+import { UserService } from './shared/user.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthIntercepter } from './auth/auth.interceptor';
+import { MatButtonModule, MatIconModule } from '@angular/material';
+import { MatConfirmDialogComponent } from './shared/mat-confirm-dialog/mat-confirm-dialog.component';
 
 
 @NgModule({
@@ -21,7 +29,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AppComponent,
     OrdersComponent,
     OrderComponent,
-    OrderItemsComponent
+    OrderItemsComponent,
+    SignInComponent,
+    SignUpComponent,
+    HeaderComponent,
+    MatConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -32,10 +44,18 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDialogModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule
   ],
-  entryComponents:[OrderItemsComponent],
-  providers: [OrderService],
+  entryComponents:[OrderItemsComponent, MatConfirmDialogComponent],
+  providers: [OrderService, UserService, AuthGuard,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthIntercepter,
+    multi: true
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

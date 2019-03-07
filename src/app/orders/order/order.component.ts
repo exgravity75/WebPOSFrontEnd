@@ -33,29 +33,34 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.multiple();
-    //this.Fibonacci();
-    // this.PrimeFactor();
-
     let orderID = this.currentRoute.snapshot.paramMap.get('id');
     // let orderID = this.currentRoute.snapShot.data['id'];
     //console.log('orderID:'+ orderID);
+
+    // /order/edit/4?searchId=23
+    // console.log(this.currentRoute.snapshot.queryParamMap.get('searchId'));
+    // let searchId = this.currentRoute.snapshot.paramMap.get('searchId');
+    // if(searchId != null){
+    //   console.log(searchId);
+    // }
+
+
     if(orderID == null){
       this.resetForm();
     }
     else{
-      this.orderService.getOrderByID(parseInt( orderID)).then(res => {
+      this.orderService.getOrderByID(parseInt( orderID)).subscribe(res => {
         this.orderService.formData = res.order;
         this.orderService.orderItems = res.orderDetails;
-
-      })
+      },
+      err =>{});
     }
 
 
     this.customerService.getCustomerList().then(res => this.customerList = res as Customer[]);
   }
 
-  resetForm(form?:NgForm){
+  resetForm(form?: NgForm){
     if(form===null)
       form.reset();
 
@@ -122,13 +127,13 @@ export class OrderComponent implements OnInit {
     if(this.validateForm()){
       this.orderService.saveOrderUpdateOrder().subscribe(res => {
         this.resetForm();
-        this.toastr.success('Submitted Success', '==Restaurant==', {timeOut: 5000, progressBar: true});
+        this.toastr.success('Submitted Success', '==Dairy==', {timeOut: 5000, progressBar: true});
         this.router.navigate(['/orders']);
       });
     }
     else
     {
-      this.toastr.error('invalid inputs', '==Restaurant==', {timeOut: 5000, progressBar: true});
+      this.toastr.error('invalid inputs', '==Dairy==', {timeOut: 5000, progressBar: true});
     }
 
   }

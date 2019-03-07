@@ -3,7 +3,6 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
-
 .jumbotron{
   padding-top: 0px;
   background: #fff;
@@ -19,4 +18,48 @@ table.table-hover tbody tr:hover {
 
 #toast-container > div {
   opacity:1;
+}
+
+
+.confirm-dialog-container .mat-dialog-container {
+  border-radius: .25em .25em .5em .5em;
+  padding: 0px;
+}
+
+.confirm-dialog-container .content-container {
+  margin: 10px 10px 60px 10px;
+  color: darkcyan;
+  display: flex;
+}
+
+.confirm-dialog-container #close-icon{
+  margin-left: auto;
+  order:2;
+  font-weight: bolder;
+  width: '40px';
+}
+
+.confirm-dialog-container #close-icon:hover{
+  cursor: pointer;
+}
+.confirm-dialog-container #no-button{
+  height: 50px;
+  width: 50%;
+  background-color: rosybrown;
+  color: white;
+  border-radius: 0px;
+}
+.confirm-dialog-container #yes-button{
+  height: 50px;
+  width: 50%;
+  background-color: royalblue;
+  color: white;
+  border-radius: 0px;
+}
+
+.confirm-dialog-container span.content-span {
+  padding: 5px 1px;
+
+  text-align: center;
+  font-size: 20px;
 }
